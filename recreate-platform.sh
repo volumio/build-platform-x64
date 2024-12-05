@@ -15,8 +15,8 @@ source "${SRC}"/scripts/helpers.sh
 grep -q "[[:space:]]" <<<"${SRC}" && { log "\"${SRC}\" contains whitespaces, this is not supported. Aborting." "err" >&2 ; exit 1 ; }
 
 log "Reading config"
-# shellcheck source=config/config.x86
-source "${SRC}"/config/config.x86
+# shellcheck source=config/config.x64
+source "${SRC}"/config/config.x64
 
 log "Start processing"
 # shellcheck source=scripts/update-platform.sh

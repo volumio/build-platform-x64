@@ -11,7 +11,7 @@ SRC="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 grep -q "[[:space:]]" <<<"${SRC}" && { echo "\"${SRC}\" contains whitespaces, this is not supported. Aborting." "err" >&2 ; exit 1 ; }
 
 source "${SRC}"/scripts/helpers.sh
-source ${SRC}/config/config.x86
+source ${SRC}/config/config.x64
 
 concatenate_firmware() {
 

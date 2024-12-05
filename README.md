@@ -1,14 +1,14 @@
 # Build the Volumio x86 linux kernel
-Copyright (c) 2022, 2023, 24 Gé Koerkamp / volumio@bluewin.ch
+Copyright (c) 2022, 2023, 2024 Gé Koerkamp / ge.koerkamp@bluewin.ch
  
 ## **Intro**
-This script is used for building the necessary x86 platform files, which includes kernel, firmware, scripts etc. It does NOT build an image.  
-This is default set to kernel 6.1.y, but can still be used to build platform files with kernel 5.10.y  
-See the config.x86 in the config directory.
+This script is used for building the necessary x64 platform files, which includes kernel files, firmware, scripts etc. It does NOT build an image.  
+This is default set to kernel 6.12.y, but could still be used to build platform files with kernel 6.6.y or earlier  
+See the config.x64 in the config directory.
 
 ## **Prerequisites**
 
-This build process has been tested on Debia Buster (Debian 10), Ubuntu 22.04 and Ubuntu 23.10  
+This build process has been tested on Debian Buster (Debian 10), Ubuntu 22.04, Ubuntu 23.10 and Ubuntu 24.04.01 
 Some prerequisite packages may already have been installed during the OS install. Make sure you have the following.
 You will need the following minimal packages (including the ones you would need for Volumio building):
 
@@ -26,18 +26,18 @@ See at the end of this document.
 ### Clone the build repository
 
 ```
-git clone https://github.com/gkkpch/build-x86-platform --depth 1
+git clone https://github.com/gkkpch/build-platform-x64 --depth 1
 ```
 ### Run the build process
 
 ```
-cd build-x86-platform
+cd build-platform-x64
 ./mkplatform.sh
 ```
 
 ## **Patching**
 
-**```config.x86 parameter PATCH_KERNEL```**  
+**```config.x64 parameter PATCH_KERNEL```**  
 When set to "yes" (active), the build process will supply kernel patching, the kernel will not be compiled.
 This allows you to test patching until the result is OK.  
 Disable ```PATCH_KERNEL``` when done.
@@ -56,20 +56,20 @@ Please use a meaningfull name, refer to the existing patch names as examples.
 The patch will automatically be prefixed with a sequence number (the highest existing prefix number, incremented by 1), extension ```.patch``` will also be added to the name.  
 You can change/ correct the name later, but be carefull with the sequence number.  
 The sequence number ensures that patches are applied in the patched order (a patch could be a patch on top o another).     
-Check the patch and when correct, move it to the ```build-x86-platform/patch``` folder.   
+Check the patch and when correct, move it to the ```build-platform-x64/patches``` folder.   
 From here the patch will be used in the kernel build process. Patches (still) in the work folder have no effect.  
 You can clear the work folder afterwards.  
 
 ### New kernel sources
 
-Keep these in folder ```build-x86-platform/sources``` for later reference, grouped by kernel version.
+Keep these in folder ```build-platform-x64/sources``` for later reference, grouped by kernel version.
 
 ### Kernel configuration
-**```config.x86 parameter CONFIGURE_KERNEL```**  
+**```config.x64 parameter CONFIGURE_KERNEL```**  
 When set to "yes". the kernel configuration settings can be modified, the menuconfig dialogue will appear.  
-Configuration modifications will be saved in ```/platform-x86/packages-buster/amd64-volumio-min-<kernelbranch>_defconfig``` and reused with future kernel compiles.
+Configuration modifications will be saved in ```config/amd64-volumio-min-<kernelbranch>_defconfig``` and reused with future kernel compiles.
 
-a## **Add support for a current Release Candidate kernel**
+## **Add support for a current Release Candidate kernel**
 Release Candidate kernels are not part of the ```linux-stable``` repo.  
 The compilation of such a kernel requires
 * manually clone the current kernel repo after checking the current rc name (e.g. 6.3-rc7):
@@ -77,7 +77,7 @@ The compilation of such a kernel requires
 git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git linux-6.3-rc7
 ```
 
-* modification of ```./config/x86.conf```
+* modification of ```./config/x64.conf```
     * comment the current kernel branch
     ```
     #KERNELBRANCH="6.1.y"
@@ -106,7 +106,7 @@ For the patch-process, use the relevant patch sources from a **previous** ```./p
     * some may be mismatched a few lines in case the source was changed in the new kernel version.
     * in case the patch does not apply anymore because of errors in custom sources, consult the internet and apply the necessary fixes or replace the patch & source. This is not always trivial.  
 
-* Modify ```./config/x86.conf```
+* Modify ```./config/x64.conf```
     * comment the current kernel branch
     ```
     #KERNELBRANCH="6.1.y"
@@ -167,15 +167,15 @@ rm -r new-fw
 rm -r lib
 ```
 
-In case you added new firmware (not missing stuff), open ```config/config.x86``` and add the date of the new firmware tarball (in this case "20230104") to the list of firmware releases.
+In case you added new firmware (not missing stuff), open ```config/config.x64``` and add the date of the new firmware tarball (in this case "20230104") to the list of firmware releases.
 ```
-LINUX_FW_REL=("20211027" "20221216" "20230104")
+LINUX_FW_REL=("20221216" "20230104")
 ```
-in both cases, start the merge script in the build-x86-platform root folder
+in both cases, start the merge script in the ```build-platform-x64``` root folder
 ```
 ./mergefirmware.sh
 ```
-The new tarball will be copied to platform-x86
+The new tarball will be copied to platform-x64
 
 ## New firmware-linux from kernel.org
 
@@ -225,6 +225,8 @@ Add the new date to config/config.x86 and start the merge (see above)
 |20241127|gkkpch|Preparations for kernel 6.12.y (waiting for 6.12.y LTS)
 |20241128|gkkpch|Added DSD patches (from 6.6 plus a new one)
 |||Firmware: added version from 20241110
+|20241204|gkkpch|Freeze build-x86-platform
+|20241205|gkkpch|Refactored the build process and platform file structure and re-published as build-platform-x64 repo
 <br />
 <br />
 <br />
