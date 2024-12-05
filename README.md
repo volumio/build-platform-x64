@@ -1,4 +1,4 @@
-# Build the Volumio x86 linux kernel
+# Build the Volumio x64 (x86_amd64) linux kernel
 Copyright (c) 2022, 2023, 2024 Gé Koerkamp / ge.koerkamp@bluewin.ch
  
 ## **Intro**
@@ -235,4 +235,5 @@ Add the new date to config/config.x86 and start the merge (see above)
 <br />ge.koerkamp@gmail.com
 <br />04.01.2023 v1.0
 <br />08.12.2023 v1.1
+<br />05.12.2024 v2.0
 
