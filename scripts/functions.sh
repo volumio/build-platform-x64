@@ -211,17 +211,34 @@ backup_to_storage() {
   fi
 
   log "backup the .deb files"
+  [[ ! -d ${SRC}/debs ]] && mkdir -p ${SRC}/debs
   rsync --remove-source-files -rq ../*.deb "$SRC/debs"
   find ../ -maxdepth 1 -type f -name 'linux-*' -delete
 
+  log "Please do not add the .deb files to the 'build-platform-x64 repo" "warn"
+  log "Just keep them local in case you wish to re-create the platform files" "warn"
   cd ..
 }
 
 create_platform(){
 
+if [ ! -d ${SRC}/debs ]; then
+  log ".deb files are missing, re-run 'mkplatform.sh' first" "err"
+  exit
+fi
+
 HEADERS=$(ls ${SRC}/debs/linux-headers*.deb)
 IMAGE=$(ls ${SRC}/debs/linux-image*.deb)
 LIBC=$(ls ${SRC}/debs/linux-libc*.deb)
+
+if [ ! -f ${HEADERS} ] || [ ! -f ${IMAGE} ] || [ ! -f ${LIBC} ]; then
+  log "Not all packages availabe, re-run 'mkplatform.sh' first" "err"
+  exit
+fi   
+if [ ! -d ${PLATFORMDIR} ]; then
+  log "Platform files are missing, re-run 'mkplatform.sh' first" "err"
+  exit
+fi
 
 cd ${PLATFORMDIR}
 rm -r firmware*
