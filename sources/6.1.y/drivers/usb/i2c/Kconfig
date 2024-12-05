@@ -1,0 +1,20 @@
+menuconfig USB_I2C
+#
+# USB I2C adapter configuration
+#
+    bool "USB to I2C adapter support"
+    help
+      Say Y here if you want to use a usb to i2c adapter board"
+
+if USB_I2C
+
+config USB_I2C_CHT341
+	tristate "CH341A USB to UART/I2C/SPI"
+	help
+	  Say Y here if you want to use a CH341A USB to I2C adapter board
+	  to connect I2C devices to a Linux host.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called i2c-ch341-usb.
+
+endif # USB_I2C

@@ -1,0 +1,25 @@
+From 859675d18f76b5f19449ff5cafd3e42f3a8d0447 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?G=C3=A9=20Koerkamp?= <ge.koerkamp@gmail.com>
+Date: Wed, 20 Dec 2023 12:30:01 +0100
+Subject: [PATCH] last-created-patch-to-process
+
+---
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 954f7f3b5cc3..ff729e2e40d3 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -653,6 +653,8 @@ static const struct usb_device_id blacklist_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x7392, 0xc611), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x2b89, 0x8761), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 
+ 	/* Additional Realtek 8821AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
+-- 
+2.34.1
+

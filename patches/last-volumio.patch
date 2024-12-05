@@ -1,0 +1,73 @@
+diff --git a/drivers/net/wireless/realtek/Kconfig b/drivers/net/wireless/realtek/Kconfig
+index 4a1f0e64df03..3a906e83fc42 100644
+--- a/drivers/net/wireless/realtek/Kconfig
++++ b/drivers/net/wireless/realtek/Kconfig
+@@ -11,7 +11,11 @@ config WLAN_VENDOR_REALTEK
+ 	  your specific card in the following questions.
+ 
+ if WLAN_VENDOR_REALTEK
+-
++source "drivers/net/wireless/realtek/rtl8188eu/Kconfig"
++source "drivers/net/wireless/realtek/rtl8723du/Kconfig"
++source "drivers/net/wireless/realtek/rtl8812au/Kconfig"
++source "drivers/net/wireless/realtek/rtl8821cu/Kconfig"
++source "drivers/net/wireless/realtek/rtl88x2bu/Kconfig"
+ source "drivers/net/wireless/realtek/rtl818x/Kconfig"
+ source "drivers/net/wireless/realtek/rtlwifi/Kconfig"
+ source "drivers/net/wireless/realtek/rtl8xxxu/Kconfig"
+diff --git a/drivers/net/wireless/realtek/Makefile b/drivers/net/wireless/realtek/Makefile
+index ab25419f56c6..a9823b5663f5 100644
+--- a/drivers/net/wireless/realtek/Makefile
++++ b/drivers/net/wireless/realtek/Makefile
+@@ -2,7 +2,11 @@
+ #
+ # Makefile for the Linux Wireless network device drivers for Realtek units
+ #
+-
++obj-$(CONFIG_RTL8188EU)	+= rtl8188eu/
++obj-$(CONFIG_RTL8723DU)	+= rtl8723du/
++obj-$(CONFIG_88XXAU)    += rtl8812au/
++obj-$(CONFIG_RTL8821CU)	+= rtl8821cu/
++obj-$(CONFIG_RTL8822BU)	+= rtl88x2bu/
+ obj-$(CONFIG_RTL8180)		+= rtl818x/
+ obj-$(CONFIG_RTL8187)		+= rtl818x/
+ obj-$(CONFIG_RTLWIFI)		+= rtlwifi/
+diff --git a/drivers/usb/Kconfig b/drivers/usb/Kconfig
+index 578a439e71b5..f4b13d823bcf 100644
+--- a/drivers/usb/Kconfig
++++ b/drivers/usb/Kconfig
+@@ -166,6 +166,8 @@ source "drivers/usb/atm/Kconfig"
+ 
+ endif # USB
+ 
++source "drivers/usb/i2c/Kconfig"
++
+ source "drivers/usb/phy/Kconfig"
+ 
+ source "drivers/usb/gadget/Kconfig"
+diff --git a/drivers/usb/Makefile b/drivers/usb/Makefile
+index 643edf5fe18c..cbdc91db0d4a 100644
+--- a/drivers/usb/Makefile
++++ b/drivers/usb/Makefile
+@@ -50,6 +50,8 @@ obj-$(CONFIG_USB_MICROTEK)	+= image/
+ 
+ obj-$(CONFIG_USB_SERIAL)	+= serial/
+ 
++obj-$(CONFIG_USB_I2C)	    += i2c/
++
+ obj-$(CONFIG_USB)		+= misc/
+ obj-$(CONFIG_EARLY_PRINTK_USB)	+= early/
+ 
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 3d13fdf7590c..0cc842892134 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2176,6 +2176,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x22d9, /* Oppo */
+ 		   QUIRK_FLAG_DSD_RAW),
++    VENDOR_FLG(0x22e8, /* Cambridge */
++           QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x23ba, /* Playback Design */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY | QUIRK_FLAG_IFACE_DELAY |
+ 		   QUIRK_FLAG_DSD_RAW),

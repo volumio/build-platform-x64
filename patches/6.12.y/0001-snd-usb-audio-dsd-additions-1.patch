@@ -1,0 +1,36 @@
+From dc14df62e8c2737de70e7d7470b25c380690af74 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?G=C3=A9=20Koerkamp?= <ge.koerkamp@gmail.com>
+Date: Thu, 28 Nov 2024 13:24:52 +0100
+Subject: [PATCH] 0001-snd-usb-audio-dsd-additions-1
+
+---
+ sound/usb/quirks.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index c5fd180357d1..b227206d4fdd 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2323,6 +2323,10 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x22d9, /* Oppo */
+ 		   QUIRK_FLAG_DSD_RAW),
++	VENDOR_FLG(0x22e1, /* TempoTec Sonata BHD */
++		   QUIRK_FLAG_DSD_RAW),
++	VENDOR_FLG(0x22e8,  /* Cambridge */
++		   QUIRK_FLAG_DSD_RAW),		   
+ 	VENDOR_FLG(0x23ba, /* Playback Design */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY | QUIRK_FLAG_IFACE_DELAY |
+ 		   QUIRK_FLAG_DSD_RAW),
+@@ -2340,6 +2344,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x2d87, /* Cayin device */
+ 		   QUIRK_FLAG_DSD_RAW),
++	VENDOR_FLG(0x2fc6, /* E1DA #9038D  */
++		   QUIRK_FLAG_DSD_RAW),			   
+ 	VENDOR_FLG(0x3336, /* HEM devices */
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x3353, /* Khadas devices */
+-- 
+2.43.0
+

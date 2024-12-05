@@ -1,0 +1,35 @@
+From 5bddfb973f9c400ec19360a54301fa0fd437ae09 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?G=C3=A9=20Koerkamp?= <ge.koerkamp@gmail.com>
+Date: Wed, 20 Dec 2023 11:10:29 +0100
+Subject: [PATCH] last-created-patch-to-process
+
+---
+ sound/usb/quirks.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 752422147fb3..c6ae98f1be0e 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1815,12 +1815,17 @@ u64 snd_usb_interface_dsd_format_quirks(struct snd_usb_audio *chip,
+ 	case 0x152a:  /* Thesycon devices */
+ 	case 0x20b1:  /* XMOS based devices */
+ 	case 0x22d9:  /* Oppo */
+-	case 0x23ba:  /* Playback Designs */
++	case 0x22e1:  /* Tempotec Sonata BHD*/
++	case 0x22e8:  /* Cambridge */
++	case 0x23ba:  /* Playback Design */
+ 	case 0x25ce:  /* Mytek devices */
+ 	case 0x278b:  /* Rotel? */
+ 	case 0x292b:  /* Gustard/Ess based devices */
+ 	case 0x2972:  /* FiiO devices */
+ 	case 0x2ab6:  /* T+A devices */
++	case 0x2d87:  /* Cayin device */
++	case 0x2fc6:  /* E1DA #9038D */
++	case 0x3336:  /* HEM devices */
+ 	case 0x3353:  /* Khadas devices */
+ 	case 0x3842:  /* EVGA */
+ 	case 0xc502:  /* HiBy devices */
+-- 
+2.34.1
+
