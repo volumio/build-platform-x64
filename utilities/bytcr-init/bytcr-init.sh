@@ -17,7 +17,7 @@ for CODEC in $(ls /usr/share/alsa/ucm); do
       case "$CODEC" in
        $CODEC_RT5640 | $CODEC_RT5672)
           echo "${CODEC} detected"
-          onoff=$(amixer -c0 get Headphone Jack|grep "Mono: Playback" |awk '{print $3}')
+          onoff=$(amixer -c1 get "Headphone Output" | grep "Mono: Playback" |awk '{print $3}')
           if [ "${onoff}" = "[off]" ]; then
             echo "No headphones plugged in --> output to Speaker"
             /usr/bin/alsaucm -c ${CODEC} set _verb HiFi set _enadev Speaker
