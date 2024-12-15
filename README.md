@@ -227,6 +227,9 @@ Add the new date to config/config.x86 and start the merge (see above)
 |||Firmware: added version from 20241110
 |20241204|gkkpch|Freeze build-x86-platform
 |20241205|gkkpch|Refactored the build process and platform file structure and re-published as build-platform-x64 repo
+|20241213|gkkpch|Reversed to kernel 6.6.y
+|||Platform utilities, bytcr-init.sh: fix headphone detection
+|20241215|gkkpch|Updated kernel to 6.6.66, CONFIG_NR_CPUS raised from 8 to 64
 <br />
 <br />
 <br />
