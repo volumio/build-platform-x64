@@ -7,7 +7,7 @@ CODEC_RT5651="bytcr-rt5651"
 CODEC_RT5672="cht-bsw-rt5672"
 CODEC_ES8316="bytcht-es8316"
 
-for CODEC in $(ls /usr/share/alsa/ucm); do
+for CODEC in $(ls /usr/share/alsa/ucm2/Intel); do
   if [[ $CODEC == byt* ]] || [[ $CODEC == cht* ]]; then
     DAC=$(aplay -l | grep $CODEC)
     if [ ! -z "$DAC" ];then
