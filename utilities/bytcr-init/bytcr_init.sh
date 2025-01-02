@@ -17,7 +17,14 @@ for CODEC in $(ls /usr/share/alsa/ucm2/Intel); do
       case "$CODEC" in
        $CODEC_RT5640 | $CODEC_RT5672)
           echo "${CODEC} detected"
-          onoff=$(amixer -c1 get "Headphone Output" | grep "Mono: Playback" |awk '{print $3}')
+          mixer_ctl_headphone=$(amixer -c1 get "Headphone" | grep "Mono: Playback" |awk '{print $3}')
+          mixer_ctl_headphone_output=$(amixer -c1 get "Headphone Output" | grep "Mono: Playback" |awk '{print $3}')
+          if [ ! -z "${mixer_ctl_headphone}" ]; then
+            echo "No 'headphone output' mixer control yet"
+            onoff=${mixer_ctl_headphone}
+          else
+            onoff=${mixer_ctl_headphone_output}
+          fi
           if [ "${onoff}" = "[off]" ]; then
             echo "No headphones plugged in --> output to Speaker"
             /usr/bin/alsaucm -c ${CODEC} set _verb HiFi set _enadev Speaker

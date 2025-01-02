@@ -255,6 +255,8 @@ dpkg-deb -x $HEADERS ${DEVICE}
 
 log "Extract linux image .deb" 
 dpkg-deb -x $IMAGE ${DEVICE}
+log "Remove unused /etc"
+rm -r ${DEVICE}/etc
 cp $SRC/VERSION ${PLATFORMDIR}
 
 log "Extract linux libc .deb" 

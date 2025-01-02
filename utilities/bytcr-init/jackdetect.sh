@@ -4,11 +4,11 @@ SUPPORTED_CODECS="bytcr-rt5640|cht-bsw-rt5672"
 CODEC=$(aplay -l | egrep -o "${SUPPORTED_CODECS}" | head -1)
 
 if [ -z "$CODEC" ]; then
-  echo "No supported codec detected, exiting" >> /tmp/jackdetect.log
+  logger  "jackdetect.sh: No supported codec detected, exiting"
   exit
 fi
 
-echo $(date) "$1 $CODEC" >> /tmp/jackdetect.log
+logger "$1 $CODEC"
 
 case $1 in
   "jack/headphone HEADPHONE unplug")
