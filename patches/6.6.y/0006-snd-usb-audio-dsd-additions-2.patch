@@ -1,0 +1,25 @@
+From a2be779c3442c851c2302769bc06c60db040c87c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?G=C3=A9=20Koerkamp?= <ge.koerkamp@gmail.com>
+Date: Wed, 8 Jan 2025 12:20:01 +0100
+Subject: [PATCH] snd-usb-audio-dsd-additions-2
+
+---
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 4b405f0183f7..fcbdbf7460ff 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2179,6 +2179,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
+ 	DEVICE_FLG(0x1852, 0x5065, /* Luxman DA-06 */
+ 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
++	DEVICE_FLG(0x1852, 0x5066, /* Luxman DA-250 */
++		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
+ 	DEVICE_FLG(0x1901, 0x0191, /* GE B850V3 CP2114 audio interface */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x19f7, 0x0035, /* RODE NT-USB+ */
+-- 
+2.43.0
+
