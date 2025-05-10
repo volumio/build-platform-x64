@@ -2,9 +2,8 @@
 
 KERNELREPO="git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git"
 
-KERNELBRANCH="6.6.y"
-#KERNELBRANCH="6.12.y"
-KERNELBRANCH_PREV="6.1.y"
+KERNELBRANCH="6.12.y"
+KERNELBRANCH_PREV="6.6.y"
 KERNELDIR="${SRC}"/linux-${KERNELBRANCH}
 KERNELCONFIG="amd64-volumio-min-${KERNELBRANCH}_defconfig"
 PATCH_KERNEL="no"
@@ -17,10 +16,10 @@ PATCHWORKDIR="${SRC}"/patchesworkdir
 PLATFORMREPO="https://github.com/gkkpch/platform-x64"
 PLATFORMDIR="${SRC}"/platform-x64
 
-LINUX_FW_REL=("20230804" "20241110")
+LINUX_FW_REL=("20250509")
 LINUX_FW_PREFIX="linux-fw-"
 VOLUMIO_FW=("volumio-fw-brcm-nvram" "volumio-fw-brcm-b43" "volumio-fw-cfg80211")
-VOLUMIO_BUILD_FIRMWARE=("20230804")
+VOLUMIO_BUILD_FIRMWARE=("20250509")
 
 export INSTALL_MOD_STRIP=1
 export LOCALVERSION=-volumio
