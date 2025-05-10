@@ -1,5 +1,12 @@
-# Build the Volumio x64 (x86_amd64) linux kernel
-Copyright (c) 2022, 2023, 2024 Gé Koerkamp / ge.koerkamp@bluewin.ch
+# Build the Volumio x64 (x86_amd64) Linux Kernel
+
+This repository provides the tooling necessary for building the Volumio x64 platform components — including the Linux kernel, firmware packages, configuration files, and support scripts. It does **not** produce a complete system image.
+
+The system was originally developed by Gé Koerkamp between 2022 and 2024. It reflects significant engineering work aimed at providing a stable, modular, and forward-compatible kernel environment for Volumio’s x64 platforms.
+
+As of **May 2025**, the project has transitioned to **collaborative maintenance**. Contributions from the wider Volumio community and external developers are welcome. The focus remains on stability, compatibility with LTS kernel releases, and minimal maintenance overhead.
+
+The project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
  
 ## **Intro**
 This script is used for building the necessary x64 platform files, which includes kernel files, firmware, scripts etc. It does NOT build an image.  
