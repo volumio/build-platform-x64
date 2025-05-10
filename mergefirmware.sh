@@ -17,8 +17,12 @@ concatenate_firmware() {
   local firmware_id="$1"
   local base_path="${LINUX_FW_PREFIX}${firmware_id}.tar.xz"
 
-  # Use shared helper to detect and reassemble chunks if needed
+  # Ensure source firmware is chunked if oversized
+  split_file_if_needed "${base_path}"
+
+  # Reassemble if needed (always works even if not split)
   reassemble_chunks_if_needed "${base_path}"
+
   log "Unpacking Linux Firmware ${REASSEMBLED_PATH}..."
   tar xfJ "${REASSEMBLED_PATH}"
   log "Done ${firmware_id}" "okay"
@@ -48,7 +52,7 @@ for firmware_release in ${LINUX_FW_REL[*]}; do
   tar cfJ "${output_file}" ./lib
   log "Done firmware-${firmware_release}" "okay"
 
-  # Use shared helper to split file if too large
+  # Chunk merged output if necessary
   split_file_if_needed "${output_file}"
 
   rm -r lib
