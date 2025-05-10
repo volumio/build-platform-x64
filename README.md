@@ -284,6 +284,7 @@ Add the new date to config/config.x86 and start the merge (see above)
 <br />04.01.2023 v1.0
 <br />08.12.2023 v1.1
 <br />05.12.2024 v2.0
+</sub>
 <br />
 <sub> May 2025/ Andrew Seredyn
 <br />10.05.2025 v2.2
