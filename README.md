@@ -273,6 +273,8 @@ Add the new date to config/config.x86 and start the merge (see above)
 |20241219|gkkpch|[Utilities] improved bytcr_init.sh and jackdetect.sh
 |20250108|gkkpch|[snd-usb-audio] Add DSD quirk for Luxman DA-250
 |20250509|foonerd|Archive support with GitHub size limit enforcement
+|||Switched to kernel 6.12.y LTS as default
+|||Switched to firmware 20250509-snapshot
 <br />
 <br />
 <br />
@@ -282,4 +284,7 @@ Add the new date to config/config.x86 and start the merge (see above)
 <br />04.01.2023 v1.0
 <br />08.12.2023 v1.1
 <br />05.12.2024 v2.0
+<br />
+<sub> May 2025/ Andrew Seredyn
+<br />10.05.2025 v2.2
 
