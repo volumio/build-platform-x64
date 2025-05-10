@@ -272,6 +272,7 @@ Add the new date to config/config.x86 and start the merge (see above)
 |20241215|gkkpch|Updated kernel to 6.6.66, CONFIG_NR_CPUS raised from 8 to 64
 |20241219|gkkpch|[Utilities] improved bytcr_init.sh and jackdetect.sh
 |20250108|gkkpch|[snd-usb-audio] Add DSD quirk for Luxman DA-250
+|20250509|foonerd|Archive support with GitHub size limit enforcement
 <br />
 <br />
 <br />
