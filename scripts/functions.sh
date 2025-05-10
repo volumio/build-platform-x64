@@ -220,7 +220,7 @@ backup_to_storage() {
   cd ..
 }
 
-create_platform(){
+create_platform() {
 
   if [ ! -d ${SRC}/debs ]; then
     log ".deb files are missing, re-run 'mkplatform.sh' first" "err"
@@ -248,10 +248,24 @@ create_platform(){
   log "Copy relevant firmware version(s)"
   for fw in ${VOLUMIO_BUILD_FIRMWARE[*]}; do
     firmware_path="${SRC}/firmware/firmware-${fw}.tar.xz"
+    chunk_prefix="${firmware_path}.part_"
 
-    # Reassemble chunked firmware if needed
-    reassemble_chunks_if_needed "${firmware_path}"
-    cp "${REASSEMBLED_PATH}" "firmware-${fw}.tar.xz"
+    if ls "${chunk_prefix}"* &>/dev/null; then
+      log "Copying chunked firmware for ${fw}"
+      cp "${chunk_prefix}"* .
+    elif [[ -f "${firmware_path}" ]]; then
+      split_file_if_needed "${firmware_path}"
+      if ls "${chunk_prefix}"* &>/dev/null; then
+        log "Firmware was split after size check, copying chunks for ${fw}"
+        cp "${chunk_prefix}"* .
+      else
+        log "Copying unchunked firmware for ${fw}"
+        cp "${firmware_path}" "firmware-${fw}.tar.xz"
+      fi
+    else
+      log "Missing firmware archive or chunks for ${fw}" "err"
+      exit 1
+    fi
   done  
 
   mkdir -p ${DEVICE}
