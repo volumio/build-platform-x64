@@ -50,6 +50,3 @@ dur=$(echo "$(date +%s.%N) - ${STARTTIME}" | bc)
 log "$(printf 'Execution time: %.6f seconds\n' $dur)"
 
 exit
-
-
-

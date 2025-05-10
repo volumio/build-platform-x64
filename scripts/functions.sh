@@ -220,58 +220,79 @@ backup_to_storage() {
   cd ..
 }
 
-create_platform(){
+create_platform() {
 
-if [ ! -d ${SRC}/debs ]; then
-  log ".deb files are missing, re-run 'mkplatform.sh' first" "err"
-  exit
-fi
+  if [ ! -d ${SRC}/debs ]; then
+    log ".deb files are missing, re-run 'mkplatform.sh' first" "err"
+    exit
+  fi
 
-HEADERS=$(ls ${SRC}/debs/linux-headers*.deb)
-IMAGE=$(ls ${SRC}/debs/linux-image*.deb)
-LIBC=$(ls ${SRC}/debs/linux-libc*.deb)
+  HEADERS=$(ls ${SRC}/debs/linux-headers*.deb)
+  IMAGE=$(ls ${SRC}/debs/linux-image*.deb)
+  LIBC=$(ls ${SRC}/debs/linux-libc*.deb)
 
-if [ ! -f ${HEADERS} ] || [ ! -f ${IMAGE} ] || [ ! -f ${LIBC} ]; then
-  log "Not all packages availabe, re-run 'mkplatform.sh' first" "err"
-  exit
-fi   
-if [ ! -d ${PLATFORMDIR} ]; then
-  log "Platform files are missing, re-run 'mkplatform.sh' first" "err"
-  exit
-fi
+  if [ ! -f ${HEADERS} ] || [ ! -f ${IMAGE} ] || [ ! -f ${LIBC} ]; then
+    log "Not all packages available, re-run 'mkplatform.sh' first" "err"
+    exit
+  fi   
 
-cd ${PLATFORMDIR}
-rm -r firmware*
-rm -rf $DEVICE
-log "Copy relevant firmware version(s)"
-for fw in ${VOLUMIO_BUILD_FIRMWARE[*]};
-  do
-    cp ${SRC}/firmware/firmware-${fw}.tar.xz .
+  if [ ! -d ${PLATFORMDIR} ]; then
+    log "Platform files are missing, re-run 'mkplatform.sh' first" "err"
+    exit
+  fi
+
+  cd ${PLATFORMDIR}
+  rm -r firmware*
+  rm -rf $DEVICE
+
+  log "Copy relevant firmware version(s)"
+  for fw in ${VOLUMIO_BUILD_FIRMWARE[*]}; do
+    firmware_path="${SRC}/firmware/firmware-${fw}.tar.xz"
+    chunk_prefix="${firmware_path}.part_"
+
+    if ls "${chunk_prefix}"* &>/dev/null; then
+      log "Copying chunked firmware for ${fw}"
+      cp "${chunk_prefix}"* .
+    elif [[ -f "${firmware_path}" ]]; then
+      split_file_if_needed "${firmware_path}"
+      if ls "${chunk_prefix}"* &>/dev/null; then
+        log "Firmware was split after size check, copying chunks for ${fw}"
+        cp "${chunk_prefix}"* .
+      else
+        log "Copying unchunked firmware for ${fw}"
+        cp "${firmware_path}" "firmware-${fw}.tar.xz"
+      fi
+    else
+      log "Missing firmware archive or chunks for ${fw}" "err"
+      exit 1
+    fi
   done  
 
-mkdir -p ${DEVICE}
-log "Extract linux headers .deb" 
-dpkg-deb -x $HEADERS ${DEVICE}
+  mkdir -p ${DEVICE}
+  log "Extract linux headers .deb" 
+  dpkg-deb -x $HEADERS ${DEVICE}
 
-log "Extract linux image .deb" 
-dpkg-deb -x $IMAGE ${DEVICE}
-log "Remove unused /etc"
-rm -r ${DEVICE}/etc
-cp $SRC/VERSION ${PLATFORMDIR}
+  log "Extract linux image .deb" 
+  dpkg-deb -x $IMAGE ${DEVICE}
+  log "Remove unused /etc"
+  rm -r ${DEVICE}/etc
+  cp $SRC/VERSION ${PLATFORMDIR}
 
-log "Extract linux libc .deb" 
-dpkg-deb -x $LIBC ${DEVICE}
+  log "Extract linux libc .deb" 
+  dpkg-deb -x $LIBC ${DEVICE}
 
-log "Cleanup unused folders"
-rm -rf ${DEVICE}/DEBIAN
-rm -f ${DEVICE}/lib/modules/build
+  log "Cleanup unused folders"
+  rm -rf ${DEVICE}/DEBIAN
+  rm -f ${DEVICE}/lib/modules/build
 
-log "Copy volumio utility scripts"
-cp -pdR "${SRC}/utilities/" ${DEVICE}
+  log "Copy volumio utility scripts"
+  cp -pdR "${SRC}/utilities/" ${DEVICE}
 
+  log "Compress ${DEVICE}"
+  tar cfJ ${DEVICE}.tar.xz ./${DEVICE}
 
-log "Compress ${DEVICE}"
-tar cfJ ${DEVICE}.tar.xz ./${DEVICE}
-rm -rf $DEVICE
-  
+  # Use shared helper to split if oversized
+  split_file_if_needed "${DEVICE}.tar.xz"
+
+  rm -rf $DEVICE
 }

@@ -25,9 +25,6 @@ VOLUMIO_BUILD_FIRMWARE=("20230804")
 export INSTALL_MOD_STRIP=1
 export LOCALVERSION=-volumio
 
-
-
-
-
-
-
+# Optional: retain reassembled firmware archives during processing
+# Leave commented by default. Scripts must respect its absence.
+# KEEP_TMP=1

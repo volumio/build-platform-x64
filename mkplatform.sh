@@ -21,5 +21,3 @@ source "${SRC}"/config/config.x64
 log "Start processing"
 # shellcheck source=scripts/main.sh
 source "${SRC}"/scripts/main.sh
-
-
