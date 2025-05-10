@@ -133,11 +133,44 @@ For the patch-process, use the relevant patch sources from a **previous** ```./p
     
 * Start the build process.
 
-## **Firmware Maintenance**
+## Firmware Maintenance
 
 There are two situations
 * you wish to add a particular new or missing firmware binary and leave the rest as is
 * you wish to add a complete new linux-firmware from kernel.org
+
+Here is the **updated section** you should insert into the README, immediately following the **"Firmware Maintenance"** section. This reflects the newly added support for firmware archive chunking and GitHub size limit compliance.
+
+## Firmware Archive Chunking and GitHub Limits
+
+As of **May 2025**, firmware and platform archives are automatically split into **50MB chunks** if the resulting `.tar.xz` exceeds GitHub's 100MB file limit. This is necessary to ensure all artifacts remain versionable under standard Git constraints.
+
+### Chunking behavior
+
+* Any `.tar.xz` archive over **100MB** will be automatically split into:
+
+  ```
+  archive.tar.xz.part_aa
+  archive.tar.xz.part_ab
+  ...
+  ```
+* The original oversized `.tar.xz` file is removed after chunking.
+
+### Reassembly during platform builds
+
+* If chunked files (`.part_*`) are detected during platform creation or firmware patching, they are **automatically reassembled** and extracted without user intervention.
+* Temporary reassembled files (e.g., `.reassembled`) are automatically deleted unless the optional config variable `KEEP_TMP=1` is set in `config.x64`.
+
+### Developer Notes
+
+* Chunking is handled centrally in `scripts/helpers.sh`:
+
+  * `split_file_if_needed` – splits files post-creation.
+  * `reassemble_chunks_if_needed` – detects and reconstructs part files into a temporary archive.
+* All core scripts (`build-firmware.sh`, `functions.sh`) now use these helpers.
+
+This mechanism ensures seamless operation regardless of artifact size and protects against commit failures when pushing to GitHub.
+
 
 ## Add a new or missing firmware binary
 
