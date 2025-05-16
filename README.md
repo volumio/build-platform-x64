@@ -279,6 +279,7 @@ Add the new date to config/config.x86 and start the merge (see above)
 |||[rtw88] Upstream firmware merge
 |||[rtw88] Default config update from testing
 |20250514|foonerd|[i915] Add missing KMS dependencies
+|20230516|gkkpch|[hda-intel sound init] add Realtek ALC663 and ALC897
 <br />
 <br />
 <br />
