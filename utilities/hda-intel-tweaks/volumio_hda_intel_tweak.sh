@@ -7,7 +7,7 @@ for card in /sys/class/sound/card*; do
   case $cardname in
     "HDA Intel PCH"|"HDA Intel"|"HDA ATI SB"|"HD-Audio Generic"|"HDA C-Media")
       case $chip in
-        "Realtek ALC283")
+        "Realtek ALC283"|"Realtek ALC663"|"Realtek ALC897")
         # not all HDA Intel PCH/ ALC283 have spdif out ==> mixer may be missing
           mixer_exists=$(amixer -c 0 | grep "IE958,16")
           if [ ! "x$mixer_exists" == "x" ]; then
