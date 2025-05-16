@@ -275,6 +275,10 @@ Add the new date to config/config.x86 and start the merge (see above)
 |20250509|foonerd|Archive support with GitHub size limit enforcement
 |||Switched to kernel 6.12.y LTS as default
 |||Switched to firmware 20250509-snapshot
+|20250513|foonerd|[rtw88] Upstream patch for modules
+|||[rtw88] Upstream firmware merge
+|||[rtw88] Default config update from testing
+|20250514|foonerd|[i915] Add missing KMS dependencies
 <br />
 <br />
 <br />
@@ -285,6 +289,7 @@ Add the new date to config/config.x86 and start the merge (see above)
 <br />08.12.2023 v1.1
 <br />05.12.2024 v2.0
 </sub>
+<br />
 <br />
 <sub> May 2025/ Andrew Seredyn
 <br />10.05.2025 v2.2
