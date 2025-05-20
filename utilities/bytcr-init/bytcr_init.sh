@@ -32,8 +32,8 @@ for CODEC in $(ls /usr/share/alsa/ucm2/Intel); do
             echo "Headphones plugged in --> output to Headphones"
             /usr/bin/alsaucm -c ${CODEC} set _verb HiFi set _enadev Headphones
           fi
-          echo "Starting acpid.service for ${CODEC} jack detection"
-          /bin/systemctl start acpid.service
+          #echo "Starting acpid.service for ${CODEC} jack detection"
+          #/bin/systemctl start acpid.service
           echo "${CODEC} initialised"
         ;;
         CODEC_RT5651 | CODEC_ES8316)
