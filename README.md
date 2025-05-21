@@ -282,13 +282,15 @@ Add the new date to config/config.x86 and start the merge (see above)
 |||[dsipanel] Enable DRM_MIPI_DSI and PANEL_ORIENTATION_QUIRKS
 |||[console] Restore framebuffer console support (CONFIG_FRAMEBUFFER_CONSOLE)
 |||[fs] Restore FSCACHE and AUTOFS4 support
-|20230516|gkkpch|[hda-intel sound init] add Realtek ALC663 and ALC897
 |20250516|foonerd|[wifi] Restore 88XXAU USB driver module
 |||[rfkill] Add runtime unblock mechanism with .path unit for flight mode recovery
 |||[rfkill] Suppress console output in unblock services using StandardOutput=journal
 |||[cifs] Enable SMB311 and SMB_DIRECT for high-performance NAS access
 |||[cifs] Allow legacy SMB1 shares (CONFIG_CIFS_ALLOW_INSECURE_LEGACY)
 |||[cifs] Enable CONFIG_KEYS for CIFS/DFS/Kerberos support
+|20250516|gkkpch|[hda-intel sound init] add Realtek ALC663 and ALC897
+|20250520|gkkpch|[ACPI] Add event handling for mute and brightness, rename jackdetect event
+
 <br />
 <br />
 <br />
