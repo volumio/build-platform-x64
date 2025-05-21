@@ -290,6 +290,7 @@ Add the new date to config/config.x86 and start the merge (see above)
 |||[cifs] Enable CONFIG_KEYS for CIFS/DFS/Kerberos support
 |20250516|gkkpch|[hda-intel sound init] add Realtek ALC663 and ALC897
 |20250520|gkkpch|[ACPI] Add event handling for mute and brightness, rename jackdetect event
+|20250521|foonerd|[DRM] Enable commonly used KMS panels
 
 <br />
 <br />
