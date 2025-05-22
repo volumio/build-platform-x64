@@ -1,3 +1,0 @@
-event=button/mute MUTE
-action=/usr/local/bin/handle_mute_button_event.sh "%e"
-

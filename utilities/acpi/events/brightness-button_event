@@ -1,0 +1,3 @@
+event=video/brightnes*
+action=/usr/local/bin/handle_brightness-button_event.sh "%e"
+

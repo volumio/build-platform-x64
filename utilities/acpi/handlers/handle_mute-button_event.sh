@@ -8,12 +8,7 @@ for CARD in /sys/class/sound/card*; do
     MIXER="Master"
   fi  
   if [ ! -z "$MIXER" ]; then  
-    MUTED=$(/usr/bin/amixer -c $CARDNO get "$MIXER" | grep -o off)
-    if [ "$MUTED" == "off" ]; then
-      /usr/bin/amixer -c $CARDNO set "$MIXER" unmute
-    else
-      /usr/bin/amixer -c $CARDNO set "$MIXER" mute
-    fi
+     /usr/bin/amixer -c $CARDNO set "$MIXER" toggle
   fi  
 done
 exit 0
