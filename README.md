@@ -292,6 +292,8 @@ Add the new date to config/config.x86 and start the merge (see above)
 |20250520|gkkpch|[ACPI] Add event handling for mute and brightness, rename jackdetect event
 |20250521|foonerd|[DRM] Enable commonly used KMS panels
 |20250522|gkkpch|[ACPI] Correct acpi button handling and optimization
+|20250523|gkkpch|[ACPI] Add mute for bay-/cherrytrail soundcards, add screenshot move script"
+
 <br />
 <br />
 <br />
