@@ -9,7 +9,7 @@ for card in /sys/class/sound/card*; do
       case $chip in
         "Realtek ALC283"|"Realtek ALC663"|"Realtek ALC897")
         # not all HDA Intel PCH/ ALC283 have spdif out ==> mixer may be missing
-          mixer_exists=$(amixer -c 0 | grep "IE958,16")
+          mixer_exists=$(amixer -c 0 | grep "IEC958,16")
           if [ ! "x$mixer_exists" == "x" ]; then
             /usr/bin/amixer -c $cardno set IEC958,16 unmute
           fi
@@ -35,6 +35,9 @@ for card in /sys/class/sound/card*; do
         "IDT 92HD81B1X5")
           /usr/bin/amixer -c $cardno set Headphone "92%" unmute
           /usr/bin/amixer -c $cardno set Speaker "92%" unmute
+          /usr/bin/amixer -c $cardno set Master  "75%" unmute
+          ;;
+        *)
           /usr/bin/amixer -c $cardno set Master  "75%" unmute
           ;;
       esac
