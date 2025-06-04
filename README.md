@@ -30,10 +30,33 @@ See at the end of this document.
 
 ## **Kernel Build Process**
 
+### Platform Repository Configuration
+
+As of **June 2025**, the platform repository and branch are configurable via `config/config.x64`. This allows selecting a specific fork, branch, tag, or commit for platform build logic.
+
+#### Defaults
+
+```bash
+PLATFORMREPO="https://github.com/volumio/platform-x64"  # Platform repo URL; update to current working fork if needed (default is volumio)
+PLATFORMREPO_BRANCH="6.12.30"  # Branch, tag, or commit to use for platform repo; defaults to 'master' if unset
+```
+
+#### Behavior
+
+* If `PLATFORMREPO_BRANCH` is not set, the builder defaults to `master`.
+* You may specify a branch, tag, or exact commit hash.
+* The script will automatically:
+
+  * **clone** the correct reference if the directory is missing,
+  * **checkout** and **pull** the correct reference if the directory already exists.
+
+This is implemented in `scripts/functions.sh:get_platform_repo()`.
+
+
 ### Clone the build repository
 
 ```
-git clone https://github.com/gkkpch/build-platform-x64 --depth 1
+git clone https://github.com/volumio/build-platform-x64 --depth 1
 ```
 ### Run the build process
 
@@ -292,7 +315,8 @@ Add the new date to config/config.x86 and start the merge (see above)
 |20250520|gkkpch|[ACPI] Add event handling for mute and brightness, rename jackdetect event
 |20250521|foonerd|[DRM] Enable commonly used KMS panels
 |20250522|gkkpch|[ACPI] Correct acpi button handling and optimization
-|20250523|gkkpch|[ACPI] Add mute for bay-/cherrytrail soundcards, add screenshot move script"
+|20250523|gkkpch|[ACPI] Add mute for bay-/cherrytrail soundcards, add screenshot move script
+|20250604|foonerd|Allow branch, tag, or commit selection via PLATFORMREPO_BRANCH; default to Volumio repo
 
 <br />
 <br />
@@ -308,4 +332,4 @@ Add the new date to config/config.x86 and start the merge (see above)
 <br />
 <sub> May 2025/ Andrew Seredyn
 <br />10.05.2025 v2.2
-
+<br />04.06.2025 v2.3

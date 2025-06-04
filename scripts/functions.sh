@@ -9,14 +9,25 @@ fi
 
 get_platform_repo() {
   log "Getting the latest x86 platform files"
-  if [ -d ${PLATFORMDIR} ]; then
-    log "Platform folder exists, update" "info"
-    pushd ${PLATFORMDIR} 1> /dev/null 2>&1
-    git pull
-    popd 1> /dev/null 2>&1
+
+  local ref="${PLATFORMREPO_BRANCH:-master}"
+
+  if [ -d "${PLATFORMDIR}" ]; then
+    log "Platform folder exists, checking out ref: ${ref}" "info"
+    pushd "${PLATFORMDIR}" > /dev/null 2>&1
+    git fetch origin
+    git checkout "${ref}" || { log "Failed to checkout ${ref}" "err"; exit 1; }
+    git pull origin "${ref}" || log "Warning: pull may not apply cleanly on non-branch ref" "warn"
+    popd > /dev/null 2>&1
   else
-    log "Platform folder does not exist, cloning the repo" "info"
-    git clone ${PLATFORMREPO} --depth 1
+    log "Platform folder does not exist, cloning repo and checking out ref: ${ref}" "info"
+    git clone --depth 1 --branch "${ref}" "${PLATFORMREPO}" "${PLATFORMDIR}" 2>/dev/null || {
+      log "Shallow clone failed, retrying full clone for tag/commit support" "warn"
+      git clone "${PLATFORMREPO}" "${PLATFORMDIR}"
+      pushd "${PLATFORMDIR}" > /dev/null 2>&1
+      git checkout "${ref}" || { log "Failed to checkout ${ref}" "err"; exit 1; }
+      popd > /dev/null 2>&1
+    }
   fi
 }
 
