@@ -13,7 +13,8 @@ DEVICE="x86_amd64"
 
 PATCHDIR="${SRC}"/patches
 PATCHWORKDIR="${SRC}"/patchesworkdir
-PLATFORMREPO="https://github.com/gkkpch/platform-x64"
+PLATFORMREPO="https://github.com/volumio/platform-x64"  # Platform repo URL; update to current working fork if needed (default is volumio)
+PLATFORMREPO_BRANCH="6.12.30"  # Branch, tag, or commit to use for platform repo; defaults to 'master' if unset
 PLATFORMDIR="${SRC}"/platform-x64
 
 LINUX_FW_REL=("20250509")
