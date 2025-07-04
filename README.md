@@ -318,6 +318,8 @@ Add the new date to config/config.x86 and start the merge (see above)
 |20250523|gkkpch|[ACPI] Add mute for bay-/cherrytrail soundcards, add screenshot move script
 |20250604|foonerd|Allow branch, tag, or commit selection via PLATFORMREPO_BRANCH; default to Volumio repo
 |20250704|gkkpch|[hda-intel soundcard init] Realtek ALC897: unmute all IEC958 controls
+|||Created new platform-x64 repo branch 6.12.35
+
 <br />
 <br />
 <br />
