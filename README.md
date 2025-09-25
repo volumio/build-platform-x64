@@ -322,7 +322,7 @@ Add the new date to config/config.x86 and start the merge (see above)
 |20250919|gkkpch|[grub.cfg] Add "boot_screen_rotation.cfg" support
 |20250925|gkkpch|[grub.cfg] Moved bootscreen "rotation.cfg" location to /data/plugin
 |||Created new platform-x64 repo branch 6.12.49
-
+|||Additional kernel config params for gyro sensors and backlight support
 
 <br />
 <br />
