@@ -1,37 +1,51 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
-# $1 is ACPI event
-
+# $1 is ACPI event (like BRTUP / BRTDN)
 set -e
 export DISPLAY=:0.0
 
 EVENT_ID="$1"
-STEP=0.05
-CONNECTED_DISPLAY=$(xrandr | grep " connected" | cut -f1 -d" ")
-CURRENT_BRIGHTNESS=$(xrandr --verbose --current | grep ^"$CONNECTED_DISPLAY" -A5 | tail -n1 )
-CURRENT_BRIGHTNESS="${CURRENT_BRIGHTNESS##* }"  # Get brightness numerical figure with decimal place
+STEP=0.05   # step for software brightness (xrandr)
 
-set  -- $EVENT_ID
+CONNECTED_DISPLAY=$(xrandr | grep " connected" | cut -f1 -d" ")
+
+# Detect hardware backlight interface (first found)
+BACKLIGHT_DIR=$(ls -d /sys/class/backlight/* 2>/dev/null | head -n1)
+MAX=$(cat "$BACKLIGHT_DIR/max_brightness")
+HW_STEP=$(echo $MAX / 20 | bc)  # step for hardware brightness units
+
+set -- $EVENT_ID
 case $2 in
   "BRTUP")
-    NEW_BRIGHTNESS=$( echo $CURRENT_BRIGHTNESS + $STEP | bc )
-    if [ "$CURRENT_BRIGHTNESS" = "1.0" ]; then
-      echo "Max brightness reached" >> /tmp/event.log
-      NEW_BRIGHTNESS="1.0" # max brightness reached
+    if [ -n "$BACKLIGHT_DIR" ]; then
+      CUR=$(cat "$BACKLIGHT_DIR/brightness")
+      NEW=$(( CUR + HW_STEP ))
+      [ "$NEW" -gt "$MAX" ] && NEW=$MAX
+      echo "$NEW" | sudo tee "$BACKLIGHT_DIR/brightness" > /dev/null 
+      echo "HW Brightness UP → $NEW/$MAX" >> /tmp/event.log
     else
-      NEW_BRIGHTNESS=$( echo $CURRENT_BRIGHTNESS + $STEP | bc )
+      CUR=$(xrandr --verbose --current | grep ^"$CONNECTED_DISPLAY" -A5 | grep Brightness | awk '{print $2}')
+      NEW=$(echo "$CUR + $STEP" | bc)
+      [ "$(echo "$NEW > 1.0" | bc)" -eq 1 ] && NEW=1.0
+      xrandr --output "$CONNECTED_DISPLAY" --brightness "$NEW"
+      echo "SW Brightness UP → $NEW" >> /tmp/event.log
     fi
     ;;
-
   "BRTDN")
-    NEW_BRIGHTNESS=$( echo $CURRENT_BRIGHTNESS - $STEP | bc )
-    if [ "$CURRENT_BRIGHTNESS" = "0.050" ]; then
-      NEW_BRIGHTNESS="0.050" # min brightness reached
+    if [ -n "$BACKLIGHT_DIR" ]; then
+      CUR=$(cat "$BACKLIGHT_DIR/brightness")
+      NEW=$(( CUR - HW_STEP ))
+      [ "$NEW" -lt 10 ] && NEW=10
+      echo "$NEW" | sudo tee "$BACKLIGHT_DIR/brightness" >/dev/null
+      echo "HW Brightness DOWN → $NEW/$MAX" >> /tmp/event.log
     else
-      NEW_BRIGHTNESS=$( echo $CURRENT_BRIGHTNESS - $STEP | bc )
+      CUR=$(xrandr --verbose --current | grep ^"$CONNECTED_DISPLAY" -A5 | grep Brightness | awk '{print $2}')
+      NEW=$(echo "$CUR - $STEP" | bc)
+      [ "$(echo "$NEW < 0.05" | bc)" -eq 1 ] && NEW=0.05
+      xrandr --output "$CONNECTED_DISPLAY" --brightness "$NEW"
+      echo "SW Brightness DOWN → $NEW" >> /tmp/event.log
     fi
     ;;
 esac
 
-xrandr --output $CONNECTED_DISPLAY --brightness $NEW_BRIGHTNESS
 exit 0

@@ -324,6 +324,7 @@ Add the new date to config/config.x86 and start the merge (see above)
 |||Created new platform-x64 repo branch 6.12.49
 |||Additional kernel config params for gyro sensors and backlight support
 |20250926||[grub.cfg] Corrected bootscreen rotation config location
+|20250930||[handle_brightness-button_event.sh] Support HW backlight brightness control
 <br />
 <br />
 <br />
