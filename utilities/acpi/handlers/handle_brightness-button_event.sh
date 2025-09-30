@@ -11,8 +11,10 @@ CONNECTED_DISPLAY=$(xrandr | grep " connected" | cut -f1 -d" ")
 
 # Detect hardware backlight interface (first found)
 BACKLIGHT_DIR=$(ls -d /sys/class/backlight/* 2>/dev/null | head -n1)
-MAX=$(cat "$BACKLIGHT_DIR/max_brightness")
-HW_STEP=$(echo $MAX / 20 | bc)  # step for hardware brightness units
+if [ -n "$BACKLIGHT_DIR" ]; then
+  MAX=$(cat "$BACKLIGHT_DIR/max_brightness")
+  HW_STEP=$(echo $MAX / 20 | bc)  # step for hardware brightness units
+fi
 
 set -- $EVENT_ID
 case $2 in
