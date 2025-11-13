@@ -325,6 +325,7 @@ Add the new date to config/config.x86 and start the merge (see above)
 |||Additional kernel config params for gyro sensors and backlight support
 |20250926||[grub.cfg] Corrected bootscreen rotation config location
 |20250930||[handle_brightness-button_event.sh] Support HW backlight brightness control
+|20251113||[Wireless] Add support for RTL8812BU/RTL8822BU
 <br />
 <br />
 <br />
